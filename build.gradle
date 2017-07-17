@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'idea'
+}
+
+group 'com.szmslab.extendedurlencoder'
+version '1.0.0'
+description = 'A url encoding utility that extends the function of java.net.URLEncoder.'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.16.16'
+    testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
