@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'com.szmslab.extendedurlencoder'
-version '0.0.1'
+version '1.0.0'
 description = 'A URL encoding utility that extends the function of java.net.URLEncoder.'
 
 sourceCompatibility = 1.8
