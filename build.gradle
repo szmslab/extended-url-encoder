@@ -1,17 +1,27 @@
 plugins {
     id 'java'
+    id 'groovy'
+    id 'maven'
     id 'idea'
 }
 
 group 'com.szmslab.extendedurlencoder'
-version '1.0.0'
-description = 'A url encoding utility that extends the function of java.net.URLEncoder.'
+version '0.0.1'
+description = 'A URL encoding utility that extends the function of java.net.URLEncoder.'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+
+sourceSets {
+    test {
+        java {
+            srcDir 'src/test/groovy'
+        }
+    }
 }
 
 repositories {
@@ -22,6 +32,40 @@ repositories {
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.16.16'
     testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
+}
+
+task sourcesJar(type: Jar, dependsOn:classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn:javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file:${System.getProperty('user.home')}/.m2/repository")
+            pom.project {
+                name 'Extended URL Encoder'
+                description project.description
+                url 'https://github.com/szmslab/extended-url-encoder'
+                licenses {
+                    license {
+                        name 'The MIT License'
+                        url 'https://opensource.org/licenses/mit-license'
+                    }
+                }
+            }
+        }
+    }
 }
 
 idea {
